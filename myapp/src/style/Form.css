@@ -1,0 +1,118 @@
+@font-face {
+    font-family: "Muli-Regular";
+    src: url("../fonts/muli/Muli-Regular.ttf");
+  }
+  
+  @font-face {
+    font-family: "Muli-SemiBold";
+    src: url("../fonts/muli/Muli-SemiBold.ttf");
+  }
+  
+  @font-face {
+    font-family: "Muli-Bold";
+    src: url("../fonts/muli/Muli-Bold.ttf");
+  }
+  
+
+  
+  body {
+    font-family: "Muli-Regular";
+    color: #666;
+    font-size: 13px;
+    margin: 0;
+  }
+  
+  input,
+  textarea,
+  button {
+    font-family: "Muli-Regular";
+    color: #333;
+    font-size: 13px;
+  }
+  
+  p,
+  h1,
+  h2,
+  h3
+ {
+    margin: 0;
+  }
+  
+  :focus {
+    outline: none;
+  }
+  
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 68px;
+    padding-bottom: 48px;
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
+  }
+
+  
+  .label-input {
+    display: flex;
+    align-items: center;
+    margin-bottom: 17px;
+  }
+  
+  .label-input label {
+    margin-right: 20px;
+    width: 200px;
+    font-family: "Muli-Bold";
+  }
+  
+  .label-input input {
+    border: 1px solid #ccc;
+    height: 40px;
+    padding: 0 20px;
+    border-radius: 20px;
+  }
+  
+  .label-input input:focus {
+    border: 1px solid #ae3c33;
+  }
+  
+  h3 {
+    text-transform: uppercase;
+    font-size: 22px;
+    font-family: "Muli-Bold";
+    text-align: center;
+    margin-bottom: 32px;
+    color: #333;
+    letter-spacing: 2px;
+  }
+  
+  .submit-btn {
+    border: none;
+    width: 152px;
+    height: 40px;
+    margin-top: 29px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: #ae3c33;
+    font-size: 13px;
+    color: #fff;
+    text-transform: uppercase;
+    font-family: "Muli-SemiBold";
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    position: relative;
+    transition-property: color;
+    transition-duration: 0.5s;
+  }
+  
+
+  
+
+  

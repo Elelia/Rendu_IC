@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: tests/Form.test.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: tests/Form.test.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import { render, fireEvent, waitFor, getAllByText, getAllByLabelText } from '@testing-library/react';
+import Form from '../components/Form'
+
+
+/**
+* test suite for the Form component
+* @module Form.test
+* @requires react
+* @requires react-testing-library
+* @requires Form
+ */
+
+test('renders the Form component and checks for the Save button', () => {
+    const { getByText } = render(&lt;Form />);
+    const saveButton = getByText('Save');
+    expect(saveButton).toBeInTheDocument();
+    expect(saveButton).toBeDisabled();
+    expect(saveButton).toHaveClass('submit-btn');
+    fireEvent.click(saveButton);
+  });
+  
+test('submits the form with valid data and saves it to localStorage and clears the form after a successful submission ', async () => {
+    const { getByLabelText, getByText } = render(&lt;Form />);
+    const firstNameInput = getByLabelText('First Name:');
+    const lastNameInput = getByLabelText('Last Name:');
+    const emailInput = getByLabelText('Email:');
+    const dobInput = getByLabelText('Date of Birth:');
+    const postalCodeInput = getByLabelText('Postal Code:');
+    const cityInput = getByLabelText('City:');
+    const saveButton = getByText('Save');
+  
+    fireEvent.change(firstNameInput, { target: { value: 'John' } });
+    fireEvent.change(lastNameInput, { target: { value: 'Doe' } });
+    fireEvent.change(emailInput, { target: { value: 'john.doe@example.com' } });
+    fireEvent.change(dobInput, { target: { value: '2000-01-01' } });
+    fireEvent.change(postalCodeInput, { target: { value: '12345' } });
+    fireEvent.change(cityInput, { target: { value: 'Paris' } });
+  
+    fireEvent.click(saveButton);
+
+    await waitFor(() => {
+      expect(localStorage.getItem('formData')).toBeTruthy();
+      const formData = JSON.parse(localStorage.getItem('formData'));
+      expect(formData.firstName).toBe('John');
+      expect(formData.lastName).toBe('Doe');
+      expect(formData.email).toBe('john.doe@example.com');
+      expect(formData.dateOfBirth).toBe('2000-01-01');
+      expect(formData.postalCode).toBe('12345');
+      expect(getByText('Form saved successfully!')).toBeInTheDocument();
+      expect(firstNameInput.value).toBe('');
+      expect(lastNameInput.value).toBe('');
+      expect(emailInput.value).toBe('');
+      expect(dobInput.value).toBe('');
+      expect(postalCodeInput.value).toBe('');
+      expect(cityInput.value).toBe('');
+    });
+});
+
+test('displays an error message when the form is submitted with invalid data', async () => {
+    const { getByLabelText, getByText } = render(&lt;Form />);
+    const firstNameInput = getByLabelText('First Name:');
+    const lastNameInput = getByLabelText('Last Name:');
+    const emailInput = getByLabelText('Email:');
+    const dobInput = getByLabelText('Date of Birth:');
+    const postalCodeInput = getByLabelText('Postal Code:');
+    const cityInput = getByLabelText('City:');
+    const saveButton = getByText('Save');
+  
+    fireEvent.change(firstNameInput, { target: { value: '123' } });
+    fireEvent.change(lastNameInput, { target: { value: 'Doe323' } });
+    fireEvent.change(emailInput, { target: { value: 'xxxx.xxx@xxxxxxx' } });
+    fireEvent.change(dobInput, { target: { value: '2010-01-01' } });
+    fireEvent.change(postalCodeInput, { target: { value: '1234' } });
+    fireEvent.change(cityInput, { target: { value: 'Paris@' } });
+  
+    fireEvent.click(saveButton);
+  
+    await waitFor(() => {
+      const Fname = getByText('First name is invalid');
+      const Lname = getByText('Last name is invalid');
+      const Email = getByText('Email is invalid');
+      const Postal = getByText('Postal code is invalid');
+      const City = getByText('City is invalid');
+      const Age = getByText('You must be over 18 years old');
+      expect(Fname).toBeInTheDocument();
+      expect(Lname).toBeInTheDocument();
+      expect(Email).toBeInTheDocument();
+      expect(Postal).toBeInTheDocument();
+      expect(City).toBeInTheDocument();
+      expect(Age).toBeInTheDocument();
+     
+    //expect color of the error message
+
+      expect(Fname).toHaveStyle('color: red');
+      expect(Lname).toHaveStyle('color: red');
+      expect(Email).toHaveStyle('color: red');
+      expect(Postal).toHaveStyle('color: red');
+      expect(City).toHaveStyle('color: red');
+      expect(Age).toHaveStyle('color: red');
+      
+      //expect functionality of the error message
+
+      expect(Fname).toHaveTextContent('First name is invalid');
+      expect(Lname).toHaveTextContent('Last name is invalid');
+      expect(Email).toHaveTextContent('Email is invalid');
+      expect(Postal).toHaveTextContent('Postal code is invalid');
+      expect(City).toHaveTextContent('City is invalid');
+      expect(Age).toHaveTextContent('You must be over 18 years old');
+      });
+  }
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="Form.module_test.html">test</a></li><li><a href="validations.module_test.html">test</a></li></ul><h3>Global</h3><ul><li><a href="global.html#isOver18">isOver18</a></li><li><a href="global.html#isValidCity">isValidCity</a></li><li><a href="global.html#isValidEmail">isValidEmail</a></li><li><a href="global.html#isValidName">isValidName</a></li><li><a href="global.html#isValidPostalCode">isValidPostalCode</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Fri Feb 09 2024 15:08:23 GMT+0100 (heure normale d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
